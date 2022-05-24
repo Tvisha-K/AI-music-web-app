@@ -8,7 +8,7 @@ leftY ="";
 
 rightX = "";
 
-rightY = "";
+rightY= "";
 
 function preload(){
 
@@ -16,7 +16,6 @@ function preload(){
 
     peter_pan = loadSound("music2.mp3");
 
-}
 
 function setup(){
 
@@ -34,6 +33,8 @@ function setup(){
 
     pose_model.on("pose",gotResults);
 
+  
+
 }
 
 function modelLoaded(){
@@ -47,17 +48,34 @@ function draw(){
 
     image(video,0,0,600,500);
 
+    
+   song2 = harry.isPlaying();
+
+   song1 = peter_pan.isPlaying();
+}
+    
+    fill("red");
+
+    stroke("black");
+
+    if (left_score > 0.2){
+
+        circle(leftX,leftY,20); 
+        harry.stop();
+        
+
+    }
+
+    if (song1 == false){
+
+        peter_pan.play();
+
+        document.getElementById("song").innerHTML ="Song Name : Peter Pan" ;
+
+    }
+
 }
 
-function play(){
-
-    music.play();
-
-    music.setVolume(1);
-
-    music.rate(1);
-
-}
 
 function gotResults(result){
 
@@ -66,12 +84,16 @@ function gotResults(result){
          console.log(result);
  
          leftX = result[0].pose.leftWrist.x;
- 
+
          leftY = result[0].pose.leftWrist.y;
  
          rightX = result[0].pose.rightWrist.x;
  
          rightY= result[0].pose.rightWrist.y;
+
+         left_score = result[0].pose.keypoints[9].score;
+        
+         right_score = result[0].pose.keypoints[10].score;
     }
 
 }
