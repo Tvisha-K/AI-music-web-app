@@ -10,12 +10,16 @@ rightX = "";
 
 rightY= "";
 
+leftWrist ="";
+
+song_status ="";
+
 function preload(){
 
     harry = loadSound("music.mp3");
 
     peter_pan = loadSound("music2.mp3");
-
+}
 
 function setup(){
 
@@ -47,34 +51,51 @@ console.log("Model has loaded successfully")
 function draw(){
 
     image(video,0,0,600,500);
-
     
    song2 = harry.isPlaying();
 
    song1 = peter_pan.isPlaying();
-}
+
+   fill("red");
+
+   stroke("black");
+
+   if (left_score > 0.2){
+
+    circle(leftX,leftY,20); 
+    harry.stop();
     
-    fill("red");
-
-    stroke("black");
-
-    if (left_score > 0.2){
-
-        circle(leftX,leftY,20); 
-        harry.stop();
-        
-
-    }
-
     if (song1 == false){
 
-        peter_pan.play();
+     peter_pan.play();
 
-        document.getElementById("song").innerHTML ="Song Name : Peter Pan" ;
+     document.getElementById("song").innerHTML ="Song Name : Peter Pan" ;
 
-    }
+ }
 
 }
+
+if (right_score > 0.2){
+
+    circle(rightX,rightY,20); 
+    peter_pan.stop();
+    
+    if (song2 == false){
+
+     harry.play();
+
+     document.getElementById("song").innerHTML ="Song Name : Harry Potter" ;
+
+ }
+
+}
+
+   
+}
+    
+  
+
+
 
 
 function gotResults(result){
@@ -94,6 +115,8 @@ function gotResults(result){
          left_score = result[0].pose.keypoints[9].score;
         
          right_score = result[0].pose.keypoints[10].score;
+
+         leftWrist = 1;
     }
 
 }
